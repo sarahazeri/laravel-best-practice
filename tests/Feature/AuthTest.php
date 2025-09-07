@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
-    //use RefreshDatabase; 
+    // use RefreshDatabase;
 
     public function test_registers_and_logs_in(): void
     {
