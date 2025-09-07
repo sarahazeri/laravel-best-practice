@@ -31,11 +31,15 @@ class CommentController extends Controller
 
     public function update(CommentRequest $request, int $projectId, int $taskId, Comment $comment)
     {
+        $this->authorize('update', $comment);
+
         return $this->success($this->comments->update($comment, $request->validated()));
     }
 
     public function destroy(int $projectId, int $taskId, Comment $comment)
     {
+
+        $this->authorize('delete', $comment);
         $this->comments->delete($comment);
 
         return $this->success(['deleted' => true]);
