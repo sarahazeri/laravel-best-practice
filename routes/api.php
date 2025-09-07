@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +27,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('projects/{project}/tasks/{task}/comments/{comment}', [CommentController::class, 'update']);
     Route::delete('projects/{project}/tasks/{task}/comments/{comment}', [CommentController::class, 'destroy']);
 
+    Route::get('notifications/unseen', [NotificationController::class, 'unseen'])->middleware('throttle:30,1');
+    Route::post('notifications/{id}/mark-read', [NotificationController::class, 'markRead']);
 });
