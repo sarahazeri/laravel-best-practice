@@ -9,7 +9,7 @@ use App\Services\TaskService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class TaskCacheTest extends TestCase
+class TaskServiceTest extends TestCase
 {
     use RefreshDatabase;
 
