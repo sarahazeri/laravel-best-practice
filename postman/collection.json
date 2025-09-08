@@ -1,0 +1,12 @@
+{
+  "info": { "name": "Collaborative Task Management API", "_postman_id": "00000000-0000-0000-0000-000000000000", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "item": [
+    { "name": "Register", "request": { "method": "POST", "header": [ { "key":"Content-Type","value":"application/json" } ], "url": "{{baseUrl}}/api/auth/register", "body": { "mode": "raw", "raw": "{\"name\":\"Alice\",\"email\":\"alice@example.com\",\"password\":\"password123\"}" } } },
+    { "name": "Login", "request": { "method": "POST", "header": [ { "key":"Content-Type","value":"application/json" } ], "url": "{{baseUrl}}/api/auth/login", "body": { "mode": "raw", "raw": "{\"email\":\"alice@example.com\",\"password\":\"password123\"}" } } },
+    { "name": "Projects Index", "request": { "method": "GET", "header": [ { "key":"Authorization","value":"Bearer {{token}}"} ], "url": "{{baseUrl}}/api/projects" } }
+  ],
+  "variable": [
+    { "key":"baseUrl","value":"http://localhost:8080" },
+    { "key":"token","value":"" }
+  ]
+}
