@@ -1,0 +1,35 @@
+<?php
+
+namespace Tests\Unit;
+
+use App\Models\Project;
+use App\Models\Task;
+use App\Models\User;
+use App\Services\TaskService;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class TaskCacheTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_it_caches_task_listings(): void
+    {
+        $user = User::factory()->create();
+        /** @var \App\Models\Project $project */
+        $project = Project::factory()->create(['user_id' => $user->id]);
+        Task::factory()->count(2)->create([
+            'project_id' => $project->id,
+            'status' => 'todo',
+        ]);
+
+        /** @var TaskService $svc */
+        $svc = app(TaskService::class);
+        $filters = ['status' => 'todo'];
+
+        $first = $svc->paginate($project->id, $filters, 15);
+        $second = $svc->paginate($project->id, $filters, 15);
+
+        $this->assertEquals($first->total(), $second->total());
+    }
+}
