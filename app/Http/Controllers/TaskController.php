@@ -45,6 +45,7 @@ class TaskController extends Controller
         if (! $task) {
             return $this->error('Not found', 404);
         }
+        $this->authorize('delete', $task);
         $task = $this->service->update($task, $request->validated());
 
         return $this->success($task);
@@ -56,6 +57,7 @@ class TaskController extends Controller
         if (! $task) {
             return $this->error('Not found', 404);
         }
+        $this->authorize('delete', $task);
         $this->service->delete($task);
 
         return $this->success(['deleted' => true]);

@@ -37,6 +37,7 @@ class ProjectController extends Controller
 
     public function update(ProjectRequest $request, int $project)
     {
+        $this->authorize('update', $project);
         $p = $this->projects->findForUser($request->user()->id, $project);
         if (! $p) {
             return $this->error('Not found', 404);
@@ -47,6 +48,7 @@ class ProjectController extends Controller
 
     public function destroy(Request $request, int $project)
     {
+        $this->authorize('delete', $project);
         $p = $this->projects->findForUser($request->user()->id, $project);
         if (! $p) {
             return $this->error('Not found', 404);
