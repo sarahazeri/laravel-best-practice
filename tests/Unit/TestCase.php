@@ -4,11 +4,11 @@ namespace Tests\Unit;
 
 use Illuminate\Cache\ArrayStore;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Bus;
 
 abstract class TestCase extends BaseTestCase
 {
