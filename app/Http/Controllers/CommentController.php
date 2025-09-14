@@ -15,7 +15,7 @@ class CommentController extends Controller
 
     public function index(int $projectId, int $taskId)
     {
-        return $this->success(Comment::where('task_id', $taskId)->latest()->paginate(15));
+        return $this->success(Comment::with(['task'])->where('task_id', $taskId)->latest()->paginate(15));
     }
 
     public function store(CommentRequest $request, int $projectId, int $taskId)

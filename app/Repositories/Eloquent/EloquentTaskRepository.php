@@ -27,12 +27,12 @@ class EloquentTaskRepository implements TaskRepository
 
     public function findInProject(int $projectId, int $taskId): ?Task
     {
-        return Task::where('project_id', $projectId)->find($taskId);
+        return Task::with(['assignee', 'comments'])->where('project_id', $projectId)->find($taskId);
     }
 
     public function paginateWithFilters(int $projectId, array $filters, int $perPage = 15): LengthAwarePaginator
     {
-        $q = Task::query()->where('project_id', $projectId);
+        $q = Task::with(['assignee', 'comments'])->where('project_id', $projectId);
         if (! empty($filters['status'])) {
             $q->where('status', $filters['status']);
         }
