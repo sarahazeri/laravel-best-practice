@@ -71,4 +71,32 @@ class TaskControllerTest extends TestCase
             ->putJson("/api/projects/{$project['id']}/tasks/{$task['id']}", ['title' => 'Hack'])
             ->assertStatus(403);
     }
+
+    public function test_task_not_found_returns_404()
+    {
+        $user = User::factory()->create();
+        /** @var \App\Models\User $user */
+        $user = User::factory()->create();
+        /** @var \App\Models\Project $project */
+        $project = Project::factory()->create(['user_id' => $user->id]);
+        /** @var \App\Models\Task $task */
+        $task = Task::factory()->create(['assigned_to' => $user->id, 'project_id' => $project->id]);
+        $deletedTaskId = $task->id;
+        $task->delete();
+        $this->actingAs($user)
+            ->getJson("/api/projects/{$project->id}/tasks/{$deletedTaskId}")
+            ->assertStatus(404);
+    }
+
+    public function test_validation_error_returns_422()
+    {
+        /** @var \App\Models\User $user */
+        $user = User::factory()->create();
+        /** @var \App\Models\Project $project */
+        $project = Project::factory()->create(['user_id' => $user->id]);
+
+        $this->actingAs($user)
+            ->postJson("/api/projects/{$project['id']}/tasks", [])
+            ->assertStatus(422);
+    }
 }
