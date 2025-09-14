@@ -1,17 +1,35 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Services;
 
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\TaskService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Unit\TestCase;
 
 class TaskServiceTest extends TestCase
 {
     use RefreshDatabase;
+
+    private TaskService $service;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->service = app(TaskService::class);
+    }
+
+    public function test_create_task_through_service()
+    {
+        $data = Task::factory()->make()->toArray();
+
+        $task = $this->service->create($data);
+
+        $this->assertInstanceOf(Task::class, $task);
+        $this->assertDatabaseHas('tasks', ['title' => $data['title']]);
+    }
 
     public function test_it_caches_task_listings(): void
     {
